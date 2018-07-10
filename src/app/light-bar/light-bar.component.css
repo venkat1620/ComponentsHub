@@ -1,0 +1,85 @@
+.lightBarContainer {
+    width: 5vw;
+    background: #222222;
+    padding: 0.5vw;
+    border-radius: 0.5vw;
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.lightBarWrapper {
+    position: relative;
+}
+
+#lightBar {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+#lightBar>li {
+    background: transparent;
+    height: 0.5rem;
+    width: 5vw;
+}
+
+#lightBar.primary>li {
+    border-top: 1px solid #1F1F1F;
+}
+
+#lightBar.primary>li:first-child,
+#lightBar.secondary>li:last-child {
+    height: 0.25rem;
+}
+
+#lightBar.primary>li:first-child {
+    margin: 1rem 0 0 0;
+    border-top: 0;
+}
+
+#lightBar.primary>li:first-child:before,
+#lightBar.secondary>li:last-child:before {
+    content: '';
+    border-left: 2.5vw solid transparent;
+    border-right: 2.5vw solid transparent;
+    position: absolute;
+    left: 0;
+}
+
+#lightBar.primary>li:first-child:before {
+    border-bottom: 0.5rem solid #6ae719;
+    top: -0.5rem;
+}
+
+#lightBar.secondary>li {
+    border-bottom: 1px solid #1F1F1F;
+}
+
+#lightBar.secondary>li:last-child {
+    margin: 0 0 1rem 0;
+    border-bottom: 0;
+}
+
+#lightBar.secondary>li:last-child:before {
+    border-top: 0.5rem solid #6ae719;
+    bottom: -0.5rem;
+}
+
+.level {
+    position: absolute;
+    width: 5vw;
+    max-Height: 7.6rem
+}
+
+.level.bottom {
+    background-color: #6ae719;
+    height: 121px;
+    bottom: 0;
+}
+
+.level.top {
+    background-color: #6ae719;
+    height: 121px;
+    top: 0;
+}

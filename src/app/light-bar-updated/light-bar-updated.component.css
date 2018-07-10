@@ -1,0 +1,51 @@
+.lightBarContainer {
+    width: 5vw;
+    background: #222222;
+    padding: 0.5vw;
+    border-radius: 0.5vw;
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.lightBarWrapper {
+    position: relative;
+}
+
+#lightBar {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+#lightBar>li {
+    background: #6ae719;
+    height: 0.5rem;
+    width: 5vw;
+}
+
+#lightBar.primary>li {
+    border-top: 1px solid #1F1F1F;
+}
+
+#lightBar.primary>li:first-child{
+    clip-path: polygon(50% 2%, -5% 100%,105% 100%);
+}
+
+/*.level {
+    position: absolute;
+    width: 5vw;
+    max-Height: 8.4rem
+}
+
+.level.bottom {
+    background-color: #6ae719;
+    height: 134px;
+    bottom: 0;
+}
+
+.level.top {
+    background-color: #6ae719;
+    height: 134px;
+    top: 0;
+}*/

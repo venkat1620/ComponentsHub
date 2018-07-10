@@ -1,0 +1,79 @@
+.grid {
+    display: grid;
+}
+
+.customNumpad {
+    display: inline-block;
+}
+
+.numpad-container {
+    background-color: #000;
+    border-radius: 10px 10px 0 0;
+    padding: 2px 2px 0 2px;
+    width: 95%;
+    position: fixed;
+    bottom: 0;
+    left: 2.25vw;
+}
+
+.numpad-wrapper {
+    border: 1px solid #fff;
+    border-radius: 10px 10px 0 0;
+    border-bottom: 0;
+    grid: 150px / 15% 70% 15%;
+}
+
+.left-btn-group {
+    align-content: start;
+    grid: auto / 50%;
+    padding: 10px;
+}
+
+.btn-cancel,
+.btn-bsp {
+    width: 100%;
+    min-width: 16px;
+    fill: #fff;
+}
+.btn-cancel {
+  max-width: 24px;
+  height: 32px;
+}
+.btn-bsp {
+  max-width: 32px;
+  height: 32px;
+}
+.btn-check {
+    width: 100%;
+    height: 100%;
+}
+
+.mid-btn-group {
+    grid: auto / 75% 25%;
+    padding: 10px
+}
+
+.mid-left-btn-group {
+    grid: auto / auto auto auto;
+}
+
+.mid-right-btn-group {
+    text-align: left;
+}
+
+.num-btn {
+    color: #fff;
+    font-size: calc(1rem + (24 - 16) * ((100vw - 300px) / (1600 - 300)));
+}
+
+.right-btn-group {
+    grid: 50% / auto;
+    align-content: end;
+    justify-content: right;
+    padding: 10px;
+}
+
+.btn-check-wrapper {
+    width: calc(30px + (80 - 30) * ((100vw - 300px) / (1450 - 300)));
+    height: calc(30px + (80 - 30) * ((100vw - 300px) / (1450 - 300)));
+}

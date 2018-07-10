@@ -1,0 +1,18 @@
+import { Component, Output, EventEmitter, Input } from '@angular/core';
+
+@Component({
+  selector: 'numpad-btn',
+  templateUrl: './numpad-btn.component.html',
+  styleUrls: ['./numpad-btn.component.css']
+})
+export class NumpadBtnComponent {
+
+  @Input('isNotNumBtn') isNotNumBtn: boolean;
+  @Output('btnClicked')  btnClicked = new EventEmitter<void>();
+
+  constructor() { }
+
+  clicked() {
+   this.btnClicked.emit();
+  }
+}

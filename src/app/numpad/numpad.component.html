@@ -1,0 +1,39 @@
+<div class="customNumpad" (toggleComponent)='toggleKeyBoard($event)'>
+  <span class="input-container">
+      <ng-content></ng-content>
+  </span>
+  <div class="numpad-container" *ngIf="showCustomKeyboard">
+    <div class="grid numpad-wrapper">
+      <div class="grid left-btn-group">
+        <numpad-btn (btnClicked)="cancel()">
+          <svg class="btn-cancel">
+            <use href="assets/cancel-btn.svg#image" />
+          </svg>
+        </numpad-btn>
+      </div>
+      <div class="grid mid-btn-group">
+        <div class="grid mid-left-btn-group">
+          <numpad-btn (btnClicked)="setInputValue(key)" *ngFor="let key of keyValues">
+            <div id="key-{{key}}" class="num-btn">{{key}}</div>
+          </numpad-btn>
+        </div>
+        <div class="mid-right-btn-group">
+          <numpad-btn (btnClicked)="delete()">
+            <svg class="btn-bsp">
+              <use href="assets/backspace-btn.svg#image" />
+            </svg>
+          </numpad-btn>
+        </div>
+      </div>
+      <div class="grid right-btn-group">
+        <div class="btn-check-wrapper">
+          <numpad-btn  [isNotNumBtn]="isNotNumBtn" (btnClicked)="confirm()">
+            <svg class="btn-check" nonNumbtn>
+              <use href="assets/checked-btn.svg#image" />
+            </svg>
+          </numpad-btn>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
