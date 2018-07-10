@@ -1,4 +1,5 @@
 import { Component, OnInit, ContentChild, ElementRef, Renderer2, AfterContentInit } from '@angular/core';
+import { CodegenComponentFactoryResolver } from '@angular/core/src/linker/component_factory_resolver';
 
 @Component({
   selector: 'num-pad',
@@ -11,7 +12,18 @@ export class NumpadComponent implements OnInit, AfterContentInit {
 
   oldNumValue = '';
 
-  keyValues: any[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', '/'];
+  keyValues: any[] = [{value: '1', disable: false},
+                      {value: '2', disable: false},
+                      {value: '3', disable: false},
+                      {value: '4', disable: false},
+                      {value: '5', disable: false},
+                      {value: '6', disable: false},
+                      {value: '7', disable: false},
+                      {value: '8', disable: false},
+                      {value: '9', disable: false},
+                      {value: '.', disable: false},
+                      {value: '0', disable: false},
+                      {value: '/', disable: false}];
 
   isNotNumBtn: boolean;
 
@@ -22,8 +34,6 @@ export class NumpadComponent implements OnInit, AfterContentInit {
   startPosition: number;
 
   textCaretEndPosition: number;
-
-  endPosition: number;
 
   @ContentChild('inputEl') inputEl: ElementRef;
 
@@ -43,6 +53,7 @@ export class NumpadComponent implements OnInit, AfterContentInit {
   setInputValue(key) {
     this.changeInputValue(this.startPosition, 0, key);
     this.startPosition = this.startPosition + 1;
+
   }
 
   delete() {
@@ -70,7 +81,6 @@ export class NumpadComponent implements OnInit, AfterContentInit {
     this.textCaretStartPosition = this.inputEl.nativeElement.selectionStart;
     this.startPosition = this.textCaretStartPosition;
     this.textCaretEndPosition = this.inputEl.nativeElement.selectionEnd;
-    this.endPosition = this.textCaretEndPosition;
   }
 
   cancel() {

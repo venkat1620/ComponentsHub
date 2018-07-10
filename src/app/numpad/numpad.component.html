@@ -13,8 +13,8 @@
       </div>
       <div class="grid mid-btn-group">
         <div class="grid mid-left-btn-group">
-          <numpad-btn (btnClicked)="setInputValue(key)" *ngFor="let key of keyValues">
-            <div id="key-{{key}}" class="num-btn">{{key}}</div>
+          <numpad-btn (btnClicked)="setInputValue(key.value)" *ngFor="let key of keyValues" [disableBtn]="key.disable">
+            <div class="num-btn">{{key.value}}</div>
           </numpad-btn>
         </div>
         <div class="mid-right-btn-group">
