@@ -9,14 +9,28 @@ export class CustomInputDirective implements OnInit {
   constructor(private el: ElementRef, private renderer: Renderer2) { }
 
   ngOnInit() {
-    console.log(this.el.nativeElement.offsetHeight);
     console.log(this.el.nativeElement.getBoundingClientRect());
-    console.log(this.el.nativeElement.clientTop);
-    console.log(getComputedStyle(this.el.nativeElement).borderTopWidth);
   }
 
+  setHostStyle(maxHeight) {
+    console.log(this.el.nativeElement.getBoundingClientRect());
+    this.renderer.setStyle(this.el.nativeElement, 'max-height', maxHeight + 'px');
+    this.renderer.setStyle(this.el.nativeElement, 'overflow', 'auto');
+  }
 
- /* @HostListener('', ['$event.target']) onClick(target) {
+  getHostHeight() {
+    return this.el.nativeElement.getBoundingClientRect().top;
+  }
+
+  removeHostStyle() {
+    this.renderer.removeStyle(this.el.nativeElement, 'max-height');
+    this.renderer.removeStyle(this.el.nativeElement, 'overflow');
+  }
+
+  log() {
+    console.log(this.el.nativeElement.getBoundingClientRect());
+  }
+  /* @HostListener('', ['$event.target']) onClick(target) {
     target.blur();
     target.select();
   }*/

@@ -1,4 +1,5 @@
-import { Component, OnInit, ContentChild, ElementRef, Renderer2, AfterContentInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ContentChild, ElementRef, Renderer2, AfterContentInit, Host } from '@angular/core';
+import { CustomInputDirective } from './custom-input.directive';
 @Component({
   selector: 'num-pad',
   templateUrl: './numpad.component.html',
@@ -37,7 +38,7 @@ export class NumpadComponent implements OnInit, AfterContentInit {
 
   private inputElement;
 
-  constructor(private elRef: ElementRef, private renderer: Renderer2) { }
+  constructor(private elRef: ElementRef, private renderer: Renderer2, @Host() private customInputDir: CustomInputDirective) { }
 
   ngOnInit() {
     this.isNotNumBtn = true;
@@ -81,6 +82,7 @@ export class NumpadComponent implements OnInit, AfterContentInit {
 
   confirm() {
     this.showCustomKeyboard = false;
+    this.customInputDir.removeHostStyle();
   }
 
   setTextCaretPostion() {
@@ -92,12 +94,14 @@ export class NumpadComponent implements OnInit, AfterContentInit {
   cancel() {
     this.numValue = this.oldNumValue;
     this.showCustomKeyboard = false;
+    this.customInputDir.removeHostStyle();
   }
 
   toggleKeyBoard(event: Object) {
     if (event) {
       if (event['value'] === true && this.showCustomKeyboard) {
         this.showCustomKeyboard = false;
+        this.customInputDir.removeHostStyle();
       } else if (event['value'] === false && !this.showCustomKeyboard) {
         this.showCustomKeyboard = true;
         this.oldNumValue = this.numValue;
@@ -108,10 +112,14 @@ export class NumpadComponent implements OnInit, AfterContentInit {
 
   findPositionOfInputEl() {
     setTimeout(() => {
-    const inputRect = this.inputElement.getBoundingClientRect();
-    const viewPortHeight = window.innerHeight;
-    const numpadContainerEl = this.elRef.nativeElement.querySelector('#numpadContainer').getBoundingClientRect();
-      console.log(inputRect, viewPortHeight, numpadContainerEl);
+      const inputRect = this.inputElement.getBoundingClientRect();
+      const numpadContainerEl = this.elRef.nativeElement.querySelector('#numpadContainer').getBoundingClientRect();
+     if (inputRect.bottom >= numpadContainerEl.top) {
+        const maxHeight = numpadContainerEl.height - this.customInputDir.getHostHeight();
+        this.customInputDir.setHostStyle(maxHeight);
+        this.inputElement.scrollIntoView();
+        this.customInputDir.log();
+      }
     });
    }
 }
