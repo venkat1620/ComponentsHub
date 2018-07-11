@@ -2,7 +2,7 @@
   <span class="input-container">
       <ng-content></ng-content>
   </span>
-  <div class="numpad-container" *ngIf="showCustomKeyboard">
+  <div class="numpad-container" *ngIf="showCustomKeyboard" id="numpadContainer">
     <div class="grid numpad-wrapper">
       <div class="grid left-btn-group">
         <numpad-btn (btnClicked)="cancel()">

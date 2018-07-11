@@ -1,15 +1,24 @@
-import { Directive, HostListener } from '@angular/core';
+import { Directive, HostListener, ElementRef, Renderer2, OnInit } from '@angular/core';
 
 @Directive({
-  selector: '[customInput]'
+  selector: '[hostElement]'
 })
-export class CustomInputDirective {
+export class CustomInputDirective implements OnInit {
 
-  constructor() { }
+  height: number;
+  constructor(private el: ElementRef, private renderer: Renderer2) { }
 
-  @HostListener('click', ['$event.target']) onClick(target) {
+  ngOnInit() {
+    console.log(this.el.nativeElement.offsetHeight);
+    console.log(this.el.nativeElement.getBoundingClientRect());
+    console.log(this.el.nativeElement.clientTop);
+    console.log(getComputedStyle(this.el.nativeElement).borderTopWidth);
+  }
+
+
+ /* @HostListener('', ['$event.target']) onClick(target) {
     target.blur();
     target.select();
-  }
+  }*/
 
 }

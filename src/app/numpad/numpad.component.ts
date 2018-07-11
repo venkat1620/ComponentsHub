@@ -1,6 +1,4 @@
-import { Component, OnInit, ContentChild, ElementRef, Renderer2, AfterContentInit } from '@angular/core';
-import { CodegenComponentFactoryResolver } from '@angular/core/src/linker/component_factory_resolver';
-
+import { Component, OnInit, ContentChild, ElementRef, Renderer2, AfterContentInit, ViewChild } from '@angular/core';
 @Component({
   selector: 'num-pad',
   templateUrl: './numpad.component.html',
@@ -37,7 +35,9 @@ export class NumpadComponent implements OnInit, AfterContentInit {
 
   @ContentChild('inputEl') inputEl: ElementRef;
 
-  constructor(private renderer: Renderer2) { }
+  private inputElement;
+
+  constructor(private elRef: ElementRef, private renderer: Renderer2) { }
 
   ngOnInit() {
     this.isNotNumBtn = true;
@@ -45,7 +45,14 @@ export class NumpadComponent implements OnInit, AfterContentInit {
   }
 
   ngAfterContentInit() {
-    this.renderer.listen(this.inputEl.nativeElement, 'click', () => {
+    this.inputElement = this.inputEl.nativeElement;
+    this.renderer.listen(this.inputElement, 'click', () => {
+      this.setTextCaretPostion();
+    });
+    this.renderer.listen(this.inputElement, 'touchend', () => {
+      this.setTextCaretPostion();
+    });
+    this.renderer.listen(this.inputElement, 'select', () => {
       this.setTextCaretPostion();
     });
   }
@@ -53,7 +60,6 @@ export class NumpadComponent implements OnInit, AfterContentInit {
   setInputValue(key) {
     this.changeInputValue(this.startPosition, 0, key);
     this.startPosition = this.startPosition + 1;
-
   }
 
   delete() {
@@ -78,9 +84,9 @@ export class NumpadComponent implements OnInit, AfterContentInit {
   }
 
   setTextCaretPostion() {
-    this.textCaretStartPosition = this.inputEl.nativeElement.selectionStart;
+    this.textCaretStartPosition = this.inputElement.selectionStart;
     this.startPosition = this.textCaretStartPosition;
-    this.textCaretEndPosition = this.inputEl.nativeElement.selectionEnd;
+    this.textCaretEndPosition = this.inputElement.selectionEnd;
   }
 
   cancel() {
@@ -95,7 +101,17 @@ export class NumpadComponent implements OnInit, AfterContentInit {
       } else if (event['value'] === false && !this.showCustomKeyboard) {
         this.showCustomKeyboard = true;
         this.oldNumValue = this.numValue;
+        this.findPositionOfInputEl();
       }
     }
   }
+
+  findPositionOfInputEl() {
+    setTimeout(() => {
+    const inputRect = this.inputElement.getBoundingClientRect();
+    const viewPortHeight = window.innerHeight;
+    const numpadContainerEl = this.elRef.nativeElement.querySelector('#numpadContainer').getBoundingClientRect();
+      console.log(inputRect, viewPortHeight, numpadContainerEl);
+    });
+   }
 }
