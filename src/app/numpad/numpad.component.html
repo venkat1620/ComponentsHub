@@ -6,8 +6,8 @@
     <div class="grid numpad-wrapper">
       <div class="grid left-btn-group">
         <numpad-btn (btnClicked)="cancel()">
-          <svg class="btn-cancel">
-            <use href="assets/cancel-btn.svg#image" />
+          <svg class="btn-cancel" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink">
+            <use xlink:href="assets/cancel-btn.svg#image" />
           </svg>
         </numpad-btn>
       </div>
@@ -19,8 +19,8 @@
         </div>
         <div class="mid-right-btn-group">
           <numpad-btn (btnClicked)="delete()">
-            <svg class="btn-bsp">
-              <use href="assets/backspace-btn.svg#image" />
+            <svg class="btn-bsp" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink">
+              <use xlink:href="assets/backspace-btn.svg#image" />
             </svg>
           </numpad-btn>
         </div>
@@ -28,8 +28,8 @@
       <div class="grid right-btn-group">
         <div class="btn-check-wrapper">
           <numpad-btn  [isNotNumBtn]="isNotNumBtn" (btnClicked)="confirm()">
-            <svg class="btn-check" nonNumbtn>
-              <use href="assets/checked-btn.svg#image" />
+            <svg class="btn-check" nonNumbtn xmlns="http://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink">
+              <use xlink:href="assets/checked-btn.svg#image" />
             </svg>
           </numpad-btn>
         </div>

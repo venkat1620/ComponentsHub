@@ -6,7 +6,8 @@
 }
 
 .num-btn {
-    width: 40%
+    width: 60%;
+    min-width: 16px;
 }
 
 .not-num-btn {

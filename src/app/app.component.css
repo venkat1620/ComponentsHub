@@ -1,5 +1,23 @@
-input[type=text] {
- border : none;
- border-bottom: 1px solid #aaa;
- outline: none
+.input-txt {
+    border: none;
+    border-bottom: 1px solid #aaa;
+    outline: none
+}
+
+.form-control {
+    display: inline-block;
+    width: 50%;
+}
+
+.row {
+    display: flex;
+    padding: 5px 0;
+}
+
+label {
+    padding: 10px 0;
+}
+
+.custom-form>div {
+   height:50px
 }

@@ -1,9 +1,9 @@
-import { Component, OnInit, ContentChild, ElementRef, Renderer2, AfterContentInit, Host } from '@angular/core';
+import { Component, OnInit, ContentChild, ElementRef, Renderer2, AfterContentInit, Host, HostListener } from '@angular/core';
 import { CustomInputDirective } from './custom-input.directive';
 @Component({
   selector: 'num-pad',
   templateUrl: './numpad.component.html',
-  styleUrls: ['./numpad.component.css']
+  styleUrls: ['./numpad.component.css'],
 })
 export class NumpadComponent implements OnInit, AfterContentInit {
 
@@ -11,18 +11,18 @@ export class NumpadComponent implements OnInit, AfterContentInit {
 
   oldNumValue = '';
 
-  keyValues: any[] = [{value: '1', disable: false},
-                      {value: '2', disable: false},
-                      {value: '3', disable: false},
-                      {value: '4', disable: false},
-                      {value: '5', disable: false},
-                      {value: '6', disable: false},
-                      {value: '7', disable: false},
-                      {value: '8', disable: false},
-                      {value: '9', disable: false},
-                      {value: '.', disable: false},
-                      {value: '0', disable: false},
-                      {value: '/', disable: false}];
+  keyValues: any[] = [{ value: '1', disable: false },
+  { value: '2', disable: false },
+  { value: '3', disable: false },
+  { value: '4', disable: false },
+  { value: '5', disable: false },
+  { value: '6', disable: false },
+  { value: '7', disable: false },
+  { value: '8', disable: false },
+  { value: '9', disable: false },
+  { value: '.', disable: false },
+  { value: '0', disable: false },
+  { value: '/', disable: false }];
 
   isNotNumBtn: boolean;
 
@@ -38,7 +38,8 @@ export class NumpadComponent implements OnInit, AfterContentInit {
 
   private inputElement;
 
-  constructor(private elRef: ElementRef, private renderer: Renderer2, @Host() private customInputDir: CustomInputDirective) { }
+  constructor(private elRef: ElementRef, private renderer: Renderer2,
+    @Host() private customInputDir: CustomInputDirective) { }
 
   ngOnInit() {
     this.isNotNumBtn = true;
@@ -56,6 +57,11 @@ export class NumpadComponent implements OnInit, AfterContentInit {
     this.renderer.listen(this.inputElement, 'select', () => {
       this.setTextCaretPostion();
     });
+    this.renderer.listen(window, 'orientationchange', () => {
+        this.customInputDir.removeHostStyle();
+        this.findPositionOfInputEl();
+    });
+    this.renderer.setAttribute(this.inputElement, 'readonly', 'readonly');
   }
 
   setInputValue(key) {
@@ -66,9 +72,9 @@ export class NumpadComponent implements OnInit, AfterContentInit {
   delete() {
     if (this.startPosition > 0 || this.textCaretStartPosition !== this.textCaretEndPosition) {
       (this.textCaretStartPosition === this.textCaretEndPosition) ?
-                      (this.changeInputValue(this.startPosition - 1, 1, null), this.startPosition = this.startPosition - 1)  :
-                      (this.changeInputValue(this.startPosition, this.textCaretEndPosition - this.startPosition , null),
-                                            this.startPosition = this.startPosition);
+        (this.changeInputValue(this.startPosition - 1, 1, null), this.startPosition = this.startPosition - 1) :
+        (this.changeInputValue(this.startPosition, this.textCaretEndPosition - this.startPosition, null),
+          this.startPosition = this.startPosition);
       this.textCaretStartPosition = this.startPosition;
       this.textCaretEndPosition = this.startPosition;
     }
@@ -106,6 +112,7 @@ export class NumpadComponent implements OnInit, AfterContentInit {
         this.showCustomKeyboard = true;
         this.oldNumValue = this.numValue;
         this.findPositionOfInputEl();
+        console.log('find postion');
       }
     }
   }
@@ -113,13 +120,16 @@ export class NumpadComponent implements OnInit, AfterContentInit {
   findPositionOfInputEl() {
     setTimeout(() => {
       const inputRect = this.inputElement.getBoundingClientRect();
-      const numpadContainerEl = this.elRef.nativeElement.querySelector('#numpadContainer').getBoundingClientRect();
-     if (inputRect.bottom >= numpadContainerEl.top) {
-        const maxHeight = numpadContainerEl.height - this.customInputDir.getHostHeight();
-        this.customInputDir.setHostStyle(maxHeight);
-        this.inputElement.scrollIntoView();
-        this.customInputDir.log();
+      const numpadContainerEl = this.elRef.nativeElement.querySelector('#numpadContainer');
+      if (numpadContainerEl) {
+        const numpadContainerElRect = numpadContainerEl.getBoundingClientRect();
+        if ((inputRect.bottom + 20) >= numpadContainerElRect.top) {
+          let maxHeight = (numpadContainerElRect.top - 35) - this.customInputDir.getHostTop();
+          ( maxHeight <= inputRect.height + 20 ) ? (maxHeight = inputRect.height + 20) : (maxHeight = maxHeight);
+          this.customInputDir.setHostStyle(maxHeight);
+          this.inputElement.scrollIntoView();
+        }
       }
     });
-   }
+  }
 }
