@@ -7,8 +7,8 @@ import { LightBarComponent } from './light-bar/light-bar.component';
 import { LightBarUpdatedComponent } from './light-bar-updated/light-bar-updated.component';
 import { NumpadComponent } from './numpad/numpad.component';
 import { NumpadBtnComponent } from './numpad/numpad-btn.component';
-import { CustomInputDirective } from './numpad/custom-input.directive';
 import { ToggleComponentDirective } from './numpad/toggle-component.directive';
+import { CustomInputHostDirective } from './numpad/custom-input-host.directive';
 
 @NgModule({
   declarations: [
@@ -17,8 +17,8 @@ import { ToggleComponentDirective } from './numpad/toggle-component.directive';
     LightBarUpdatedComponent,
     NumpadComponent,
     NumpadBtnComponent,
-    CustomInputDirective,
-    ToggleComponentDirective
+    ToggleComponentDirective,
+    CustomInputHostDirective
   ],
   imports: [
     BrowserModule,

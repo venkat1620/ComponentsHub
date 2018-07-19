@@ -4,15 +4,13 @@
   </h1>
   <!--<app-light-bar></app-light-bar>-->
 
-  <!-- <app-light-bar-updated></app-light-bar-updated>
+  <!-- <app-light-bar-updated></app-light-bar-updated>-->
 
-style="height: 200px;"-->
-
-  <div hostElement style="margin:0;">
+  <div hostElement class="custom-form">
     <div>
-      <num-pad #numpad1>
+      <num-pad [(numValue)]="value">
         <label >Enter number 1
-          <input id="input1" class="input-txt" #num1="ngModel" required  #inputEl [(ngModel)]="numpad1.numValue">
+          <input id="input1" class="input-txt" #num1="ngModel" required #inputEl [(ngModel)]="value">
           <div *ngIf="num1.touched && num1.invalid" style="color:red">
             required.
           </div>
@@ -20,50 +18,10 @@ style="height: 200px;"-->
       </num-pad>
     </div>
     <div>
-      <num-pad #numpad2>
+      <num-pad #numpad2 [adjustMaxHeight]="'0'">
         <label for="input2">Enter number 2
-          <input id="input2" class="input-txt " #num2="ngModel" required #inputEl [(ngModel)]="numpad2.numValue">
+          <input id="input2" class="input-txt " #num2="ngModel"  required #inputEl [(ngModel)]="numpad2.numValue">
           <div *ngIf="num2.touched && num2.invalid" style="color:red">
-            required.
-          </div>
-        </label>
-      </num-pad>
-    </div>
-    <div>
-      <num-pad #numpad3>
-        <label for="input3">Enter number 3
-          <input id="input3" class="input-txt" #num3="ngModel" required #inputEl [(ngModel)]="numpad3.numValue">
-          <div *ngIf="num3.touched && num3.invalid" style="color:red">
-            required.
-          </div>
-        </label>
-      </num-pad>
-    </div>
-    <div>
-      <num-pad #numpad4>
-        <label for="input4">Enter number 4
-          <input id="input4" class="form-control" #num4="ngModel" required #inputEl [(ngModel)]="numpad4.numValue">
-          <div *ngIf="num4.touched && num4.invalid" style="color:red">
-            required.
-          </div>
-        </label>
-      </num-pad>
-    </div>
-    <div>
-      <num-pad #numpad5>
-        <label for="input5">Enter number 5
-          <input id="input5" class="form-control" #num5="ngModel" required #inputEl [(ngModel)]="numpad5.numValue">
-          <div *ngIf="num5.touched && num5.invalid" style="color:red">
-            required.
-          </div>
-        </label>
-      </num-pad>
-    </div>
-    <div>
-      <num-pad #numpad6>
-        <label for="input6">Enter number 6
-          <input id="input6" class="form-control" #num6="ngModel" #inputEl [(ngModel)]="numpad6.numValue" required>
-          <div *ngIf="num6.touched && num6.invalid" style="color:red">
             required.
           </div>
         </label>

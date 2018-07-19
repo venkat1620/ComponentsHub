@@ -4,20 +4,10 @@
     outline: none
 }
 
-.form-control {
-    display: inline-block;
-    width: 50%;
-}
-
-.row {
-    display: flex;
-    padding: 5px 0;
-}
-
-label {
-    padding: 10px 0;
+.custom-form {
+    margin: 0;
 }
 
 .custom-form>div {
-   height:50px
+    height: 10vh;
 }

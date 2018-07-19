@@ -1,5 +1,5 @@
-import { Component, OnInit, ContentChild, ElementRef, Renderer2, AfterContentInit, Host, HostListener } from '@angular/core';
-import { CustomInputDirective } from './custom-input.directive';
+import { Component, OnInit, ContentChild, ElementRef, Renderer2, AfterContentInit, Input, Output, EventEmitter } from '@angular/core';
+import { CustomInputHostDirective } from './custom-input-host.directive';
 @Component({
   selector: 'num-pad',
   templateUrl: './numpad.component.html',
@@ -7,22 +7,25 @@ import { CustomInputDirective } from './custom-input.directive';
 })
 export class NumpadComponent implements OnInit, AfterContentInit {
 
-  numValue = '';
+  @Input() public numValue: string;
+  @Output() public numValueChange: EventEmitter<string>;
+  @Input() public adjustMaxHeight: number;
 
-  oldNumValue = '';
+  oldNumValue: string;
 
-  keyValues: any[] = [{ value: '1', disable: false },
-  { value: '2', disable: false },
-  { value: '3', disable: false },
-  { value: '4', disable: false },
-  { value: '5', disable: false },
-  { value: '6', disable: false },
-  { value: '7', disable: false },
-  { value: '8', disable: false },
-  { value: '9', disable: false },
-  { value: '.', disable: false },
-  { value: '0', disable: false },
-  { value: '/', disable: false }];
+  keyValues: any[] = [
+    { value: '1', disable: false },
+    { value: '2', disable: false },
+    { value: '3', disable: false },
+    { value: '4', disable: false },
+    { value: '5', disable: false },
+    { value: '6', disable: false },
+    { value: '7', disable: false },
+    { value: '8', disable: false },
+    { value: '9', disable: false },
+    { value: '.', disable: false },
+    { value: '0', disable: false },
+    { value: '/', disable: false }];
 
   isNotNumBtn: boolean;
 
@@ -39,11 +42,16 @@ export class NumpadComponent implements OnInit, AfterContentInit {
   private inputElement;
 
   constructor(private elRef: ElementRef, private renderer: Renderer2,
-    @Host() private customInputDir: CustomInputDirective) { }
+    private customInputDir: CustomInputHostDirective) {
+    this.numValueChange = new EventEmitter<string>();
+  }
 
   ngOnInit() {
     this.isNotNumBtn = true;
     this.showCustomKeyboard = false;
+    this.numValue = this.numValue || '';
+    this.oldNumValue = '';
+    this.adjustMaxHeight = this.adjustMaxHeight || 35;
   }
 
   ngAfterContentInit() {
@@ -58,8 +66,8 @@ export class NumpadComponent implements OnInit, AfterContentInit {
       this.setTextCaretPostion();
     });
     this.renderer.listen(window, 'orientationchange', () => {
-        this.customInputDir.removeHostStyle();
-        this.findPositionOfInputEl();
+      this.customInputDir.removeHostStyle();
+      this.findPositionOfInputEl();
     });
     this.renderer.setAttribute(this.inputElement, 'readonly', 'readonly');
   }
@@ -84,6 +92,7 @@ export class NumpadComponent implements OnInit, AfterContentInit {
     const numValueArr = Array.from(this.numValue);
     numValueArr.splice(startPosition, spliceNos, value);
     this.numValue = numValueArr.join('');
+    this.numValueChange.emit(this.numValue);
   }
 
   confirm() {
@@ -101,6 +110,7 @@ export class NumpadComponent implements OnInit, AfterContentInit {
     this.numValue = this.oldNumValue;
     this.showCustomKeyboard = false;
     this.customInputDir.removeHostStyle();
+    this.numValueChange.emit(this.numValue);
   }
 
   toggleKeyBoard(event: Object) {
@@ -124,8 +134,8 @@ export class NumpadComponent implements OnInit, AfterContentInit {
       if (numpadContainerEl) {
         const numpadContainerElRect = numpadContainerEl.getBoundingClientRect();
         if ((inputRect.bottom + 20) >= numpadContainerElRect.top) {
-          let maxHeight = (numpadContainerElRect.top - 35) - this.customInputDir.getHostTop();
-          ( maxHeight <= inputRect.height + 20 ) ? (maxHeight = inputRect.height + 20) : (maxHeight = maxHeight);
+          let maxHeight = (numpadContainerElRect.top - this.adjustMaxHeight) - this.customInputDir.getHostTop();
+          (maxHeight <= inputRect.height + 20) ? (maxHeight = inputRect.height + 20) : (maxHeight = maxHeight);
           this.customInputDir.setHostStyle(maxHeight);
           this.inputElement.scrollIntoView();
         }

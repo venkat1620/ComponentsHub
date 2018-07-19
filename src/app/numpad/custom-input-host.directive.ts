@@ -3,7 +3,7 @@ import { Directive, HostListener, ElementRef, Renderer2, OnInit } from '@angular
 @Directive({
   selector: '[hostElement]'
 })
-export class CustomInputDirective implements OnInit {
+export class CustomInputHostDirective implements OnInit {
 
   height: number;
   constructor(private el: ElementRef, private renderer: Renderer2) { }
